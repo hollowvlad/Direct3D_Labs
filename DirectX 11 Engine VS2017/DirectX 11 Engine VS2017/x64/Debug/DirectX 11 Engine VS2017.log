@@ -1,0 +1,34 @@
+﻿  compilation object save succeeded; see C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\vertexshader.cso
+  Engine.cpp
+  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Graphics.cpp
+  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(177,23): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(178,24): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+D:\Visual Studio\Vs\VC\Tools\MSVC\14.31.31103\include\memory(3416,1): warning C4267: инициализация: преобразование из "size_t" в "_Ty"; возможна потеря данных
+          with
+          [
+              _Ty=UINT
+          ]
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\VertexBuffer.h(48): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::unique_ptr<UINT,std::default_delete<UINT>> std::make_unique<UINT,size_t,0>(size_t &&)"
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\VertexBuffer.h(46): message : во время компиляции функции-члена класс шаблон "HRESULT VertexBuffer<Vertex>::Initialize(ID3D11Device *,T *,UINT)"
+          with
+          [
+              T=Vertex
+          ]
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(290): message : выполняется компиляция ссылки на экземпляр шаблон функции "HRESULT VertexBuffer<Vertex>::Initialize(ID3D11Device *,T *,UINT)"
+          with
+          [
+              T=Vertex
+          ]
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.h(34): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "VertexBuffer<Vertex>"
+  RenderWindow.cpp
+  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Source.cpp
+  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  WindowContainer.cpp
+  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Создание кода...
+DirectXTK.lib(SpriteBatch.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(SpriteBatch.obj)" или на "C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
+DirectXTK.lib(VertexTypes.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(VertexTypes.obj)" или на "C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
+  DirectX 11 Engine VS2017.vcxproj -> C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\DirectX 11 Engine VS2017.exe

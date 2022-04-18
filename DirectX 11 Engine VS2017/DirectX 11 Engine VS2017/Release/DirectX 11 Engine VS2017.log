@@ -1,0 +1,25 @@
+﻿C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\pixelshader.hlsl(12,12-76): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\Release\pixelshader.cso
+  compilation object save succeeded; see C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\Release\vertexshader.cso
+  Camera.cpp
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Camera.cpp(121,30): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Camera.cpp(121,24): warning C4244: инициализация: преобразование "double" в "const float", возможна потеря данных
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Camera.cpp(122,15): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Camera.cpp(128,13): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+  AdapterReader.cpp
+  Engine.cpp
+  ErrorLogger.cpp
+  Graphics.cpp
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(176,23): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(177,24): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+  KeyboardClass.cpp
+  KeyboardEvent.cpp
+  MouseClass.cpp
+  MouseEvent.cpp
+  RenderWindow.cpp
+  Shaders.cpp
+  Source.cpp
+  StringConverter.cpp
+  WindowContainer.cpp
+LINK : fatal error LNK1104: не удается открыть файл "DirectXTK.lib"

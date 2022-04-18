@@ -1,0 +1,4 @@
+﻿C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\pixelshader.hlsl(12,12-76): warning X3206: implicit truncation of vector type
+C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\pixelshader.hlsl(10,29-39): error X4502: invalid vs_2_0 output semantic 'SV_TARGET'
+  
+  compilation failed; no code produced
