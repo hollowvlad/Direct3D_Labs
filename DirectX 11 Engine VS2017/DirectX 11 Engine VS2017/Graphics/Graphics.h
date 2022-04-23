@@ -9,6 +9,10 @@
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "Camera.h"
+#include "IMGUI/imgui.h"
+#include "IMGUI/imgui_impl_dx11.h"
+#include "IMGUI/imgui_impl_win32.h"
+
 
 class Graphics
 {
@@ -29,11 +33,14 @@ private:
 
 	VertexShader vertexshader;
 	PixelShader pixelshader;
-	ConstantBuffer<CB_VS_vertexshader> constantBuffer;
+	ConstantBuffer<CB_VS_vertexshader> constantVSBuffer;
+	ConstantBuffer<CB_PS_pixelshader> constantPSBuffer;
 
 	VertexBuffer<Vertex> vertexBuffer;
 	IndexBuffer indicesBuffer;
 
+	VertexBuffer<Vertex> vertexBufferPlane;
+	IndexBuffer indicesBufferPlane;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer;
@@ -46,8 +53,10 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
-
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myPicture;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState;
+	
 	int windowWidth = 0;
 	int windowHeight = 0;
-
+	int BlendingType = 2;		// Тип смешивания
 };

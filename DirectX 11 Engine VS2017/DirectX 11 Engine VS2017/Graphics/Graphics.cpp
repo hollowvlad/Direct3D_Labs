@@ -14,6 +14,13 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 	if (!InitializeScene())
 		return false;
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(hwnd);
+	ImGui_ImplDX11_Init(device.Get(), deviceContext.Get());
+	ImGui::StyleColorsDark();
+
 	return true;
 }
 
@@ -27,32 +34,75 @@ void Graphics::RenderFrame()
 	this->deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	this->deviceContext->RSSetState(this->rasterizerState.Get());
 	this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
+	this->deviceContext->OMSetBlendState(blendState.Get(), nullptr, 0xFFFFFFF);
 	this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
 	this->deviceContext->VSSetShader(vertexshader.GetShader(), NULL, 0);
 	this->deviceContext->PSSetShader(pixelshader.GetShader(), NULL, 0);
 
 	UINT offset = 0;
-
+	{ //Picture	
 	//Update Constant Buffer
-	XMMATRIX world = XMMatrixIdentity();
-	constantBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
-	constantBuffer.data.mat = DirectX::XMMatrixTranspose(constantBuffer.data.mat);
+		static float translationOffset[3] = { 0,0,1.0f };
+		XMMATRIX world = XMMatrixScaling(7.0f, 7.0f, 7.0f) * XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
+		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
+		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
+
+		if (!constantVSBuffer.ApplyChanges())
+			return;
+		this->deviceContext->VSSetConstantBuffers(0, 1, this->constantVSBuffer.GetAddressOf());
+
+		this->constantPSBuffer.data.alpha = 1.0f;
+		this->constantPSBuffer.ApplyChanges();
+		this->deviceContext->PSSetConstantBuffers(0, 1, this->constantPSBuffer.GetAddressOf());
 
 
-	if (!constantBuffer.ApplyChanges())
-		return;
-	this->deviceContext->VSSetConstantBuffers(0, 1, this->constantBuffer.GetAddressOf());
 
-	//Square
-	this->deviceContext->PSSetShaderResources(0, 1, this->myTexture.GetAddressOf());
-	this->deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
-	this->deviceContext->IASetIndexBuffer(indicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	this->deviceContext->DrawIndexed(indicesBuffer.BufferSize(), 0, 0);
+		//Square
+		this->deviceContext->PSSetShaderResources(0, 1, this->myPicture.GetAddressOf());
+
+		this->deviceContext->IASetVertexBuffers(0, 1, vertexBufferPlane.GetAddressOf(), vertexBufferPlane.StridePtr(), &offset);
+		this->deviceContext->IASetIndexBuffer(indicesBufferPlane.Get(), DXGI_FORMAT_R32_UINT, 0);
+		this->deviceContext->DrawIndexed(indicesBufferPlane.BufferSize(), 0, 0);
+	}
+	{ //Object
+		//Update Constant Buffer
+		static float translationOffset[3] = { 0,0,-2.0f };
+		XMMATRIX world =  XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
+		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
+		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
+
+		if (!constantVSBuffer.ApplyChanges())
+			return;
+		this->deviceContext->VSSetConstantBuffers(0, 1, this->constantVSBuffer.GetAddressOf());
+		static float alpha = 0.4f;
+		this->constantPSBuffer.data.alpha = alpha;
+		this->constantPSBuffer.ApplyChanges();
+		this->deviceContext->PSSetConstantBuffers(0, 1, this->constantPSBuffer.GetAddressOf());
+
+
+
+		//Square
+		this->deviceContext->PSSetShaderResources(0, 1, this->myTexture.GetAddressOf());
+
+		this->deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
+		this->deviceContext->IASetIndexBuffer(indicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		this->deviceContext->DrawIndexed(indicesBuffer.BufferSize(), 0, 0);
+	}	
 	
 	//Draw Text
 	spriteBatch->Begin();
 	spriteFont->DrawString(spriteBatch.get(), L"", DirectX::XMFLOAT2(0, 0), DirectX::Colors::White, 0.0f, DirectX::XMFLOAT2(0.0f,0.0f), DirectX::XMFLOAT2(1.0f, 1.0f));
 	spriteBatch->End();
+
+
+	//IMGUI
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	ImGui::Begin("Test");
+	ImGui::End();
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	this->swapChain->Present(1, NULL);
 }
@@ -198,6 +248,25 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 	spriteBatch = std::make_unique<DirectX::SpriteBatch>(this->deviceContext.Get());
 	spriteFont = std::make_unique<DirectX::SpriteFont>(this->device.Get(), L"Data\\Fonts\\comic_sans_ms_16.spritefont");
 
+	// Set Blend State
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
+
+	blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL; //0x0f;
+	
+	device->CreateBlendState(&blendDesc, blendState.GetAddressOf());
+	
+	if (FAILED(hr)) {
+		ErrorLogger::Log(hr, "Failed to create Blend State");
+		return false;
+	}
 	//Create sampler description for sampler state
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
@@ -239,7 +308,8 @@ bool Graphics::InitializeShaders()
 	#endif
 #endif
 	}
-
+	
+	
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
@@ -260,7 +330,7 @@ bool Graphics::InitializeShaders()
 
 bool Graphics::InitializeScene()
 {
-	//Textured Square
+	//Textured Figure	
 	Vertex v[] =
 	{
 		/*Vertex(-0.5f, -0.5f, 0.0f,		0.0f, 1.0f), //Bottom Left   - [0]
@@ -285,9 +355,25 @@ bool Graphics::InitializeScene()
 	
 	
 	};
+	Vertex vPlane[] =
+	{
+		Vertex(-0.5f, -0.5f, 0.0f,		0.0f, 1.0f), //Bottom Left   - [0]
+		Vertex(-0.5f, 0.5f, 0.0f,		0.0f, 0.0f), //Top Left      - [1]
+		Vertex(0.5f, 0.5f, 0.0f,		1.0f, 0.0f), //Top Right     - [2]
+		Vertex(0.5f, -0.5f, 0.0f,		1.0f, 1.0f), //Bottom Right   - [3]
+		
 
+
+	};
+	
 	//Load Vertex Data
 	HRESULT hr = this->vertexBuffer.Initialize(this->device.Get(), v, ARRAYSIZE(v));
+	if (FAILED(hr))
+	{
+		ErrorLogger::Log(hr, "Failed to create vertex buffer.");
+		return false;
+	}
+	hr = this->vertexBufferPlane.Initialize(this->device.Get(), vPlane, ARRAYSIZE(v));
 	if (FAILED(hr))
 	{
 		ErrorLogger::Log(hr, "Failed to create vertex buffer.");
@@ -310,10 +396,21 @@ bool Graphics::InitializeScene()
 		5,12,8, 9,12,5,
 		11,12,9, 11,9,10,
 	};
-
+	DWORD indicesPlane[] =
+	{
+		0,1,2,
+		0,2,3,
+		
+	};
 	//Load Index Data
 	
 	hr = this->indicesBuffer.Initialize(this->device.Get(), indices, ARRAYSIZE(indices));
+	if (FAILED(hr))
+	{
+		ErrorLogger::Log(hr, "Failed to create indices buffer.");
+		return hr;
+	}
+	hr = this->indicesBufferPlane.Initialize(this->device.Get(), indicesPlane, ARRAYSIZE(indices));
 	if (FAILED(hr))
 	{
 		ErrorLogger::Log(hr, "Failed to create indices buffer.");
@@ -327,15 +424,25 @@ bool Graphics::InitializeScene()
 		ErrorLogger::Log(hr, "Failed to create wic texture from file.");
 		return false;
 	}
-
+	hr = DirectX::CreateWICTextureFromFile(this->device.Get(), L"Data\\Textures\\Texture.bmp", nullptr, myPicture.GetAddressOf());
+	if (FAILED(hr))
+	{
+		ErrorLogger::Log(hr, "Failed to create wic texture from file.");
+		return false;
+	}
 	//Initialize Constant Buffer(s)
-	hr = this->constantBuffer.Initialize(this->device.Get(), this->deviceContext.Get());
+	hr = this->constantVSBuffer.Initialize(this->device.Get(), this->deviceContext.Get());
 	if (FAILED(hr))
 	{
 		ErrorLogger::Log(hr, "Failed to initialize constant buffer.");
 		return false;
 	}
-
+	hr = this->constantPSBuffer.Initialize(this->device.Get(), this->deviceContext.Get());
+	if (FAILED(hr))
+	{
+		ErrorLogger::Log(hr, "Failed to initialize constant buffer.");
+		return false;
+	}
 	camera.SetPosition(0.0f, 0.0f, -5.0f);
 	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
 

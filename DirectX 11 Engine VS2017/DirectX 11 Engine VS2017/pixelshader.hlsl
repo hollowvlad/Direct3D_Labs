@@ -1,3 +1,6 @@
+cbuffer alphaBuffer : register (b0) {
+    float alpha;
+};
 struct PS_INPUT
 {
     float4 inPosition : SV_POSITION;
@@ -11,5 +14,5 @@ float4 main(PS_INPUT input) : SV_TARGET
 {
     
     float3 pixelColor = objTexture.Sample(objSamplerState, input.inTexCoord);
-    return float4(pixelColor, 1.0f);
+    return float4(pixelColor, alpha);
 }

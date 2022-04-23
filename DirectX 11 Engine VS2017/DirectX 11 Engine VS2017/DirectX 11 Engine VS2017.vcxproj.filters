@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{35538486-24d6-460c-beed-6ff66377616a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\IMGUI">
+      <UniqueIdentifier>{f33c45b6-4fc2-4438-abc1-cc72b900bd2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\IMGUI">
+      <UniqueIdentifier>{6158eec9-eede-46ad-9626-e8a927a72e91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -74,6 +80,27 @@
     </ClCompile>
     <ClCompile Include="Graphics\Camera.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_demo.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_draw.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_tables.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_widgets.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_impl_dx11.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\IMGUI\imgui_impl_win32.cpp">
+      <Filter>Source Files\Graphics\IMGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +157,30 @@
     </ClInclude>
     <ClInclude Include="Graphics\Camera.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imconfig.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imgui.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imgui_internal.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imstb_rectpack.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imstb_textedit.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imstb_truetype.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imgui_impl_dx11.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\IMGUI\imgui_impl_win32.h">
+      <Filter>Header Files\Graphics\IMGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

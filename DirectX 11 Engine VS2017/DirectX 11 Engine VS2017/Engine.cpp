@@ -63,7 +63,7 @@ void Engine::Update()
 	{
 		this->gfx.camera.AdjustPosition(0.0f, cameraSpeed, 0.0f);
 	}
-	if (keyboard.KeyIsPressed('Z'))
+	if (keyboard.KeyIsPressed('C'))
 	{
 		this->gfx.camera.AdjustPosition(0.0f, -cameraSpeed, 0.0f);
 	}

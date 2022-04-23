@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\DirectX 11 Engine VS2017.exe</FullPath>
+      <FullPath>D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectX 11 Engine VS2017.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\pixelshader.cso</FullPath>
+      <FullPath>D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\pixelshader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hollow\Desktop\DirectX-11-Engine-VS2017-Tutorial_33\DirectX 11 Engine VS2017\x64\Debug\vertexshader.cso</FullPath>
+      <FullPath>D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\vertexshader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
