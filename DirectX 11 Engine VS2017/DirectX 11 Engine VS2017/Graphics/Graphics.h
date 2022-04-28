@@ -54,6 +54,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myPicture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>  myAppleTexture;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState;
 	
 	int windowWidth = 0;

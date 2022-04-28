@@ -40,10 +40,60 @@ void Graphics::RenderFrame()
 	this->deviceContext->PSSetShader(pixelshader.GetShader(), NULL, 0);
 
 	UINT offset = 0;
+	static float objectScale[] = { 1.0f,1.0f,1.0f };
+	static float objectScaling = 1.0f;
+	static float objectAlpha = 1.0f;
+	static float translationOffset[3] = { 0,0,-2.0f };
+	static float objectCatScaling = 2.5f;
+	
+	{ //Object 2
+		//Update Constant Buffer
+
+		XMMATRIX world = XMMatrixScaling(objectCatScaling, objectCatScaling, objectCatScaling) * XMMatrixTranslation(0.0f, 0.0f, 4.0f);
+		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
+		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
+
+		if (!constantVSBuffer.ApplyChanges())
+			return;
+		this->deviceContext->VSSetConstantBuffers(0, 1, this->constantVSBuffer.GetAddressOf());
+		;
+		this->constantPSBuffer.data.alpha = 1.0f;
+		this->constantPSBuffer.ApplyChanges();
+		this->deviceContext->PSSetConstantBuffers(0, 1, this->constantPSBuffer.GetAddressOf());
+
+		//Square
+		this->deviceContext->PSSetShaderResources(0, 1, this->myAppleTexture.GetAddressOf());
+
+		this->deviceContext->IASetVertexBuffers(0, 1, vertexBufferPlane.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
+		this->deviceContext->IASetIndexBuffer(indicesBufferPlane.Get(), DXGI_FORMAT_R32_UINT, 0);
+		this->deviceContext->DrawIndexed(indicesBufferPlane.BufferSize(), 0, 0);
+	}
+	{ //Object
+		//Update Constant Buffer
+
+		XMMATRIX world = XMMatrixScaling(objectScale[0], objectScale[1], objectScale[2]) * XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
+		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
+		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
+
+		if (!constantVSBuffer.ApplyChanges())
+			return;
+		this->deviceContext->VSSetConstantBuffers(0, 1, this->constantVSBuffer.GetAddressOf());
+		;
+		this->constantPSBuffer.data.alpha = objectAlpha;
+		this->constantPSBuffer.ApplyChanges();
+		this->deviceContext->PSSetConstantBuffers(0, 1, this->constantPSBuffer.GetAddressOf());
+
+		//Square
+		this->deviceContext->PSSetShaderResources(0, 1, this->myTexture.GetAddressOf());
+
+		this->deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
+		this->deviceContext->IASetIndexBuffer(indicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		this->deviceContext->DrawIndexed(indicesBuffer.BufferSize(), 0, 0);
+	}
 	{ //Picture	
 	//Update Constant Buffer
 		static float translationOffset[3] = { 0,0,1.0f };
-		XMMATRIX world = XMMatrixScaling(7.0f, 7.0f, 7.0f) * XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
+		XMMATRIX world = XMMatrixScaling(8.0f, 8.0f, 8.0f) * XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
 		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
 		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
 
@@ -64,30 +114,8 @@ void Graphics::RenderFrame()
 		this->deviceContext->IASetIndexBuffer(indicesBufferPlane.Get(), DXGI_FORMAT_R32_UINT, 0);
 		this->deviceContext->DrawIndexed(indicesBufferPlane.BufferSize(), 0, 0);
 	}
-	{ //Object
-		//Update Constant Buffer
-		static float translationOffset[3] = { 0,0,-2.0f };
-		XMMATRIX world =  XMMatrixTranslation(translationOffset[0], translationOffset[1], translationOffset[2]);
-		constantVSBuffer.data.mat = world * camera.GetViewMatrix() * camera.GetProjectionMatrix();
-		constantVSBuffer.data.mat = DirectX::XMMatrixTranspose(constantVSBuffer.data.mat);
-
-		if (!constantVSBuffer.ApplyChanges())
-			return;
-		this->deviceContext->VSSetConstantBuffers(0, 1, this->constantVSBuffer.GetAddressOf());
-		static float alpha = 0.4f;
-		this->constantPSBuffer.data.alpha = alpha;
-		this->constantPSBuffer.ApplyChanges();
-		this->deviceContext->PSSetConstantBuffers(0, 1, this->constantPSBuffer.GetAddressOf());
-
-
-
-		//Square
-		this->deviceContext->PSSetShaderResources(0, 1, this->myTexture.GetAddressOf());
-
-		this->deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
-		this->deviceContext->IASetIndexBuffer(indicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		this->deviceContext->DrawIndexed(indicesBuffer.BufferSize(), 0, 0);
-	}	
+		
+	
 	
 	//Draw Text
 	spriteBatch->Begin();
@@ -99,7 +127,33 @@ void Graphics::RenderFrame()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	ImGui::Begin("Test");
+	ImGui::Begin("Object");
+	ImGui::DragFloat("Alpha", &objectAlpha, 0.1f, 0.0f, 1.0f);
+	ImGui::Text("Scale");
+	ImGui::InputFloat3("Scale", objectScale);
+	ImGui::DragFloat("X scale", &objectScale[0], 0.1f, 0.1f, 5.0f);
+	ImGui::DragFloat("Y scale", &objectScale[1], 0.1f, 0.1f, 5.0f);
+	ImGui::DragFloat("Z scale", &objectScale[2], 0.1f, 0.1f, 5.0f);
+	if (ImGui::Button("Reset Scaling")) {
+		objectScale[0] = 1.0f;
+		objectScale[1] = 1.0f;
+		objectScale[2] = 1.0f;
+	}
+	ImGui::Text("Position");
+
+	ImGui::InputFloat3("", translationOffset);
+	ImGui::DragFloat("X pos", &translationOffset[0], 0.1f, -5.0f, 5.0f);
+	ImGui::DragFloat("Y pos", &translationOffset[1], 0.1f, -5.0f, 5.0f);
+	ImGui::DragFloat("Z pos", &translationOffset[2], 0.1f, -5.0f, 5.0f);
+	if (ImGui::Button("Reset Position")) {
+		translationOffset[0] = 0.0f;
+		translationOffset[1] = 0.0f;
+		translationOffset[2] = -2.0f;
+	}
+	ImGui::End();
+	ImGui::Begin("Cat");
+	ImGui::DragFloat("ScalingCat", &objectCatScaling, 0.1f, 0.1f, 5.0f);
+	
 	ImGui::End();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -259,7 +313,7 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL; //0x0f;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL; 
 	
 	device->CreateBlendState(&blendDesc, blendState.GetAddressOf());
 	
@@ -419,6 +473,12 @@ bool Graphics::InitializeScene()
 
 	//Load Texture
 	hr = DirectX::CreateWICTextureFromFile(this->device.Get(), L"Data\\Textures\\piano.png", nullptr, myTexture.GetAddressOf());
+	if (FAILED(hr))
+	{
+		ErrorLogger::Log(hr, "Failed to create wic texture from file.");
+		return false;
+	}
+	hr = DirectX::CreateWICTextureFromFile(this->device.Get(), L"Data\\Textures\\cat.png", nullptr, myAppleTexture.GetAddressOf());
 	if (FAILED(hr))
 	{
 		ErrorLogger::Log(hr, "Failed to create wic texture from file.");

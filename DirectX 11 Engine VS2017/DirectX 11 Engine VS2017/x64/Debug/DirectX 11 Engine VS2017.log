@@ -1,9 +1,7 @@
-﻿  Engine.cpp
+﻿  Graphics.cpp
   D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Graphics.cpp
-  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(227,23): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
-D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(228,24): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(281,23): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
+D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(282,24): warning C4244: =: преобразование "int" в "FLOAT", возможна потеря данных
 D:\Visual Studio\Vs\VC\Tools\MSVC\14.31.31103\include\memory(3416,1): warning C4267: инициализация: преобразование из "size_t" в "_Ty"; возможна потеря данных
           with
           [
@@ -15,31 +13,10 @@ D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 
           [
               T=Vertex
           ]
-D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(370): message : выполняется компиляция ссылки на экземпляр шаблон функции "HRESULT VertexBuffer<Vertex>::Initialize(ID3D11Device *,T *,UINT)"
+D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.cpp(424): message : выполняется компиляция ссылки на экземпляр шаблон функции "HRESULT VertexBuffer<Vertex>::Initialize(ID3D11Device *,T *,UINT)"
           with
           [
               T=Vertex
           ]
 D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Graphics\Graphics.h(39): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "VertexBuffer<Vertex>"
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_dx11.cpp
-  imgui_impl_win32.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  RenderWindow.cpp
-  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Source.cpp
-  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  WindowContainer.cpp
-  D:\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Создание кода...
-DirectXTK.lib(SpriteBatch.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(SpriteBatch.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(SpriteFont.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(SpriteFont.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(WICTextureLoader.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(CommonStates.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(CommonStates.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(VertexTypes.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(VertexTypes.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(pch.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(pch.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
-DirectXTK.lib(BinaryReader.obj) : warning LNK4099: "DirectXTK.pdb" PDB не найден с "DirectXTK.lib(BinaryReader.obj)" или на "D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectXTK.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
   DirectX 11 Engine VS2017.vcxproj -> D:\VSProjects\PGIZ\Direct3D_Labs\Direct3D_Labs\DirectX 11 Engine VS2017\x64\Debug\DirectX 11 Engine VS2017.exe
